@@ -19,13 +19,14 @@ export default class NewBill {
             this.billId = null;
             new Logout({ document, localStorage, onNavigate });
         }
-        /**
-         * Check if the file type of the file is allowed
-         * @param {*} file 
-         * @returns 
-         */
+ 
+    /**
+     * Check if the file type of the file is allowed
+     * @param {*} file 
+     * @returns 
+     */
     isFileExtentionOk = (file) => {
-        console.log("isFileExtentionOk", file)
+        console.log('FILE :',file)
         const fileTypeArray = ["image/jpeg", "image/jpg", "image/png"];
         const fileType = file.type;
         let fileState = this.fileState;
@@ -62,6 +63,9 @@ export default class NewBill {
                     this.fileName = fileName;
                 })
                 .catch((error) => console.error(error));
+        } else {
+            e.stopImmediatePropagation();
+            alert("Le fichier n'a pas une extension de type jpg, jpeg ou png\nMerci de corriger");
         }
     };
     handleSubmit = (e) => {
@@ -92,9 +96,6 @@ export default class NewBill {
             };
             this.updateBill(bill);
             this.onNavigate(ROUTES_PATH["Bills"]);
-        } else {
-            e.stopImmediatePropagation();
-            alert("Le fichier n'a pas une extension de type jpg, jpeg ou png\nMerci de corriger");
         }
     };
 
