@@ -2,10 +2,17 @@
  * @jest-environment jsdom
  */
 
+
 import LoginUI from "../views/LoginUI";
 import Login from "../containers/Login.js";
-import { ROUTES } from "../constants/routes";
 import { fireEvent, screen } from "@testing-library/dom";
+import store from "../__mocks__/Store.js"
+import BillsUI, { loading, error } from "../views/BillsUI.js"
+import { bills } from "../fixtures/bills.js"
+import Bills from "../containers/Bills.js";
+import { ROUTES, ROUTES_PATH } from "../constants/routes.js";
+import { localStorageMock } from "../__mocks__/localStorage.js";
+import router from "../app/Router.js";
 
 describe("Given that I am a user on login page", () => {
   describe("When I do not fill fields and I click on employee button Login In", () => {
@@ -48,8 +55,8 @@ describe("Given that I am a user on login page", () => {
     });
   });
 
-  describe("When I do fill fields in correct format and I click on employee button Login In", () => {
-    test("Then I should be identified as an Employee in app", () => {
+  describe("When I do fill fields in incorrect format and I click on employee button Login In", () => {
+    test("Toto Then I should be identified as an Employee in app", () => {
       document.body.innerHTML = LoginUI();
       const inputData = {
         email: "johndoe@email.com",
@@ -116,6 +123,7 @@ describe("Given that I am a user on login page", () => {
     });
   });
 });
+
 
 describe("Given that I am a user on login page", () => {
   describe("When I do not fill fields and I click on admin button Login In", () => {
@@ -226,5 +234,19 @@ describe("Given that I am a user on login page", () => {
     test("It should renders HR dashboard page", () => {
       expect(screen.queryByText("Validations")).toBeTruthy();
     });
+  });
+});
+
+// import de la class login et creation d'un nouveau user pour tester this.createUser(user))
+describe("Given that I am a new user", () => {
+  test("Then create a new user", () => {
+    document.body.innerHTML = LoginUI();
+    const onNavigate = (pathname) => {
+      document.body.innerHTML = ROUTES({ pathname });
+    };
+    let PREVIOUS_LOCATION = "";
+    const store = jest.fn();
+
+    const newUser = new Login({document,localStorage,onNavigate,PREVIOUS_LOCATION,store});
   });
 });
