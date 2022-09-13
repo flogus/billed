@@ -2,17 +2,10 @@
  * @jest-environment jsdom
  */
 
-
 import LoginUI from "../views/LoginUI";
 import Login from "../containers/Login.js";
 import { fireEvent, screen } from "@testing-library/dom";
-import store from "../__mocks__/Store.js"
-import BillsUI, { loading, error } from "../views/BillsUI.js"
-import { bills } from "../fixtures/bills.js"
-import Bills from "../containers/Bills.js";
-import { ROUTES, ROUTES_PATH } from "../constants/routes.js";
-import { localStorageMock } from "../__mocks__/localStorage.js";
-import router from "../app/Router.js";
+import { ROUTES } from "../constants/routes.js";
 
 describe("Given that I am a user on login page", () => {
   describe("When I do not fill fields and I click on employee button Login In", () => {
