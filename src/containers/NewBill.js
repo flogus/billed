@@ -26,7 +26,6 @@ export default class NewBill {
      * @returns 
      */
     isFileExtentionOk = (file) => {
-        console.log('FILE :',file)
         const fileTypeArray = ["image/jpeg", "image/jpg", "image/png"];
         const fileType = file.type;
         let fileState = this.fileState;
@@ -86,10 +85,8 @@ export default class NewBill {
                 ),
                 date: e.target.querySelector(`input[data-testid="datepicker"]`).value,
                 vat: e.target.querySelector(`input[data-testid="vat"]`).value,
-                pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) ||
-                    20,
-                commentary: e.target.querySelector(`textarea[data-testid="commentary"]`)
-                    .value,
+                pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) || 20,
+                commentary: e.target.querySelector(`textarea[data-testid="commentary"]`).value,
                 fileUrl: this.fileUrl,
                 fileName: this.fileName,
                 status: "pending",
