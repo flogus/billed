@@ -63,6 +63,7 @@ Puis allez à l'adresse : `http://127.0.0.1:8080/`
 
 ```
 $ npm run test
+$ npm run test -- --watch
 ```
 
 ## Comment lancer un seul test ?
