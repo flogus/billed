@@ -4,10 +4,12 @@
  import { fireEvent, screen } from "@testing-library/dom"
  import NewBillUI from "../views/NewBillUI.js"
  import NewBill from "../containers/NewBill.js"
+ import BillsUI from "../views/BillsUI.js"
  import { ROUTES_PATH } from "../constants/routes"
  import { localStorageMock } from "../__mocks__/localStorage.js";
- import store from "../__mocks__/Store.js"
+ import mockStore from "../__mocks__/store"
  import router from "../app/Router";
+ jest.mock("../app/store", () => mockStore)
 
  describe("Given I am connected as an employee", () => {
    describe("When I am on NewBill Page", () => {
@@ -55,7 +57,7 @@
       
       const form = screen.getByTestId("form-new-bill");
 
-      const newBill = new NewBill({ document, onNavigate, store, localStorage });
+      const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage });
       const handleSubmit = jest.fn(newBill.handleSubmit)
       
       inputFile.addEventListener('submit', handleSubmit)
@@ -73,7 +75,7 @@
      })
 
      test('Then we test if the image type is "image/jpg"', () => {
-      const newBill = new NewBill({ document, onNavigate, store, localStorage });
+      const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage });
       const file = {
         type: "image/jpg",
       };
@@ -82,47 +84,8 @@
       expect(fileState).toBeTruthy()
     });
 
-    //  test('Then we test if the uploaded image type is ok', () => {
-    //   //NewBillUI
-    //   const newBill = new NewBill({ document, onNavigate, store, localStorage });
-    //   const nouveauBillUI = NewBillUI
-    //   document.body.innerHTML = nouveauBillUI
-    //   const file = {};
-    //   const theFile = Object.create(file);
-      
-    //   // Good file type
-    //   theFile.type = "image/jpeg";
-    //   const fileState =  newBill.isFileExtentionOk(theFile)
-    //   const uploadButton = screen.getByTestId("file")
-    //   const handleChangeFile = jest.fn((e) => newBill.handleChangeFile(e,theFile))
-    //   uploadButton.addEventListener("submit", handleChangeFile);
-    //   fireEvent.click(uploadButton);
-    //   expect(fileState).toBeTruthy();
-    // });
-
-    // test('Then we test if the uploaded image type is NOT ok', () => {
-    //   //NewBillUI
-    //   const newBill = new NewBill({ document, onNavigate, store, localStorage });
-    //   const nouveauBillUI = NewBillUI
-    //   document.body.innerHTML = nouveauBillUI
-    //   const file = {};
-    //   const theFile = Object.create(file);
-
-    //   // Bad file type
-    //   theFile.type = "image/pdf";
-    //   const fileState =  newBill.isFileExtentionOk(theFile)
-    //   console.log("fileState",fileState)
-    //   const uploadButton = screen.getByTestId("file")
-    //   // const handleChangeFile = jest.fn((e) => newBill.handleChangeFile(e,theFile))
-    //   const e = { preventDefault: jest.fn() };
-    //   newBill.handleChangeFile(e)
-    //   uploadButton.addEventListener("submit", handleChangeFile);
-    //   fireEvent.click(uploadButton);
-    //   expect(fileState).not.toBeTruthy()
-    // });
-
     test('Then we test if the uploaded image type is OK', () => {
-      const newBill = new NewBill({ document, onNavigate, store, localStorage });
+      const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage });
       const handleChangeFile = jest.fn(newBill.handleChangeFile)
       const inputFile = screen.getByTestId("file")
       inputFile.addEventListener('change', handleChangeFile)
@@ -134,7 +97,7 @@
     })
 
     test('Then we test if the uploaded image type is NOT OK', () => {
-      const newBill = new NewBill({ document, onNavigate, store, localStorage });
+      const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage });
       const handleChangeFile = jest.fn(newBill.handleChangeFile)
       const inputFile = screen.getByTestId("file")
       global.alert = jest.fn();
@@ -152,6 +115,6 @@
       global.alert();
       expect(global.alert).toHaveBeenCalledTimes(1);
     })
-
    })
+
  })
